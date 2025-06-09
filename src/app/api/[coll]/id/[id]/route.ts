@@ -13,7 +13,7 @@ const firestore = getFirestore(app);
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { coll: string; id: string } }
+  { params }: { params: Promise<{ coll: string; id: string }> }
 ) {
   const { coll: collectionName, id } = await params;
 
@@ -38,7 +38,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { coll: string; id: string } }
+  { params }: { params: Promise<{ coll: string; id: string }> }
 ) {
   const { coll: collectionName, id } = await params;
 
@@ -67,7 +67,7 @@ export async function PUT(
 
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: { coll: string; id: string } }
+  { params }: { params: Promise<{ coll: string; id: string }> }
 ) {
   const { coll: collectionName, id } = await params;
   if (!collectionName || typeof collectionName !== 'string') {

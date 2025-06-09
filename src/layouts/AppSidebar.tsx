@@ -52,7 +52,7 @@ const othersItems: NavItem[] = [
    {
     icon: <FaChartColumn/>,
     name: "KPI",
-    path: "/kpi/division",
+    path: "/kpi",
   },
 ];
 
