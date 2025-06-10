@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 
 export default async function KpiDivisi() {
   const [resDiv, resKpi, resKpiUser, resUser] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/divisi`, {cache:"no-store"}),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/kpi`, {cache:"no-store"}),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/kpi_user`, {cache:"no-store"}),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {cache:"no-store"}),
+    fetch(`${process.env.API_URL}/divisi`, {cache:"no-store"}),
+    fetch(`${process.env.API_URL}/kpi`, {cache:"no-store"}),
+    fetch(`${process.env.API_URL}/kpi_user`, {cache:"no-store"}),
+    fetch(`${process.env.API_URL}/users`, {cache:"no-store"}),
   ]);
   const [resultDiv, resultKpi, resultKpiUser, resultUser] = await Promise.all([
     resDiv.json(),
