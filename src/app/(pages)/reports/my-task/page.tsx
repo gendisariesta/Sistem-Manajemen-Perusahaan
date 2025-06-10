@@ -4,7 +4,7 @@ import Content from "@/components/task/Content";
 import React from "react";
 
 export default async function MyTask() {
-  const res = await fetch(`http://localhost:3000/api/tugas`, {
+  const res = await fetch(`${process.env.API_URL}/tugas`, {
     cache: 'no-store',
   });
   const result = await res.json();
