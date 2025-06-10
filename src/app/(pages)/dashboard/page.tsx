@@ -1,63 +1,45 @@
 import type { Metadata } from "next";
-import { EcommerceMetrics } from "@/components/ecommerce/EcommerceMetrics";
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/Table";
+import PresensiButtonCard from "@/components/PresensiButtonCard";
+import PresensiListCard from "@/components/PresensiListCard";
+import TaskSummaryCard from "@/components/TaskSummaryCard";
+import EmployeeActivities from "@/components/EmployeeActivities"
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
-  title:
-    "Next.js E-commerce Dashboard | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js Home for TailAdmin Dashboard Template",
+  title: "Halaman Dashboard | Goolaya Company",
 };
-const data = [{
-  nama: "gendis",
-  kelahiran: "Pekalongan",
-}];
-const columns = ['nama', 'kelahiran'];
-export default function Ecommerce() {
+export default async function Dashboard() {
+  const cookieStore = cookies();
+  const resUser = await fetch(`${process.env.API_URL}api/auth`, {
+    headers: {Cookie: cookieStore.toString()},
+    cache: 'no-store',
+  });
+  const resultUser = await resUser.json();
+  const dataUser = resultUser.user;
+  const [resPresensi, resTugas] = await Promise.all([
+    fetch(`${process.env.API_URL}api/kehadiran?id_user=${dataUser.uid}`,{cache:'no-store'}),
+    fetch(`${process.env.API_URL}api/tugas?assign_to_id=${dataUser.uid}`,{cache:'no-store'}),
+  ]);
+  const [resultPresensi, resultTugas] = await Promise.all([
+    resPresensi.json(),
+    resTugas.json(),
+  ]);
+  const dataPresensi = resultPresensi.data;
+  const dataTugas = resultTugas.data;
   return (
     <div className="grid grid-cols-12 gap-4 md:gap-6">
       <div className="col-span-12 space-y-6 xl:col-span-8">
-        <EcommerceMetrics />
-         <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-          <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
-              LOVE
-          </div>
-
-          <div className="flex items-end justify-between mt-5">
-            <div>
-              <span className="text-sm text-gray-500 dark:text-gray-400">
-                Customers
-              </span>
-              <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-                3,782
-              </h4>
-            </div>
-          </div>
-        </div>
+        <PresensiButtonCard data={dataPresensi} dataUser={dataUser} />
       </div>
       <div className="col-span-12 xl:col-span-4">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-          <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-xl dark:bg-gray-800">
-              LOVE
-          </div>
-
-          <div className="flex items-end justify-between mt-5">
-            <div>
-              <span className="text-sm text-gray-500 dark:text-gray-400">
-                Customers
-              </span>
-              <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-                3,782
-              </h4>
-            </div>
-          </div>
-        </div>
+        <PresensiListCard data={dataPresensi} />
+      </div>
+       <div className="col-span-12 xl:col-span-8">
+        <TaskSummaryCard data={dataTugas} />
+      </div>
+      <div className="col-span-12 xl:col-span-4">
+        <EmployeeActivities data={dataTugas} />
       </div>
     </div>
   );

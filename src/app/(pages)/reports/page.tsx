@@ -11,9 +11,7 @@ export const metadata: Metadata = {
 
 
 export default async function TaskSummary() {
-  const res = await fetch(`http://localhost:3000/api/tugas`, {
-    cache: 'no-store',
-  });
+  const res = await fetch(`${process.env.API_URL}api/tugas`, {cache: 'no-store'});
   const result = await res.json();
   const data = result.data || [];
   const counts = data.reduce(

@@ -16,6 +16,8 @@ export default function SignInForm() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callback = searchParams.get('callback') || '/dashboard';
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -29,8 +31,6 @@ export default function SignInForm() {
       const data = await res.json();
       if (data.status == 200) {
         localStorage.setItem('token', data.token);
-        const searchParams = useSearchParams();
-        const callback = searchParams.get('callback') || '/dashboard';
         router.push(callback);
       } else {
         setMessage(data.error);
@@ -39,25 +39,6 @@ export default function SignInForm() {
       setMessage(err.error);
     }
   };
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [error, setError] = useState('');
-
-  // const handleLogin = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const res = await signIn('credentials', {
-  //     redirect: false,
-  //     email,
-  //     password,
-  //   });
-
-  //   if (res?.error) {
-  //     setError('Login gagal');
-  //   } else {
-  //     window.location.href = '/dashboard';
-  //   }
-  // };
-
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
