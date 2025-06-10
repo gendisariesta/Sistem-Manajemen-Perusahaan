@@ -6,7 +6,7 @@ import { cookies } from 'next/headers';
 
 export default async function EmployeeDetailPage() {
   const cookieStore = cookies();
-  const res = await fetch("http://localhost:3000/api/auth", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth`, {
     headers: {
       Cookie: cookieStore.toString(),
     },

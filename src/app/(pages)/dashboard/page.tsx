@@ -11,15 +11,15 @@ export const metadata: Metadata = {
 };
 export default async function Dashboard() {
   const cookieStore = cookies();
-  const resUser = await fetch(`${process.env.API_URL}api/auth`, {
+  const resUser = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth`, {
     headers: {Cookie: cookieStore.toString()},
     cache: 'no-store',
   });
   const resultUser = await resUser.json();
   const dataUser = resultUser.user;
   const [resPresensi, resTugas] = await Promise.all([
-    fetch(`${process.env.API_URL}api/kehadiran?id_user=${dataUser.uid}`,{cache:'no-store'}),
-    fetch(`${process.env.API_URL}api/tugas?assign_to_id=${dataUser.uid}`,{cache:'no-store'}),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/kehadiran?id_user=${dataUser.uid}`,{cache:'no-store'}),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/tugas?assign_to_id=${dataUser.uid}`,{cache:'no-store'}),
   ]);
   const [resultPresensi, resultTugas] = await Promise.all([
     resPresensi.json(),
