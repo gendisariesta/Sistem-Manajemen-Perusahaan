@@ -9,7 +9,7 @@ export default async function EmployeeDetailPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/id/` + id,{cache:'no-store'});
+  const res = await fetch(`${process.env.API_URL}/users/id/` + id,{cache:'no-store'});
   const result = await res.json();
   console.log(result)
 

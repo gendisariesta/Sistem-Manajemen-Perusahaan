@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import React from "react";
 import PresensiButtonCard from "@/components/PresensiButtonCard";
 import PresensiListCard from "@/components/PresensiListCard";
@@ -6,9 +5,6 @@ import TaskSummaryCard from "@/components/TaskSummaryCard";
 import EmployeeActivities from "@/components/EmployeeActivities"
 import { cookies } from "next/headers";
 
-export const metadata: Metadata = {
-  title: "Halaman Dashboard | Goolaya Company",
-};
 export default async function Dashboard() {
   const cookieStore = cookies();
   const resUser = await fetch(`${process.env.API_URL}/auth`, {
